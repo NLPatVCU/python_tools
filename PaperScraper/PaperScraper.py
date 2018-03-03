@@ -22,7 +22,8 @@ class PaperScraper():
 
         self.driver = driver
 
-
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.driver.quit()
 
     def __import_all_scrapers(self):
         return [ScienceDirect(self.driver)]

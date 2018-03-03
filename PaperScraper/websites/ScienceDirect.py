@@ -1,4 +1,3 @@
-
 from websites.PaperSite import PaperSite
 """A scraper of a science direct articles"""
 
@@ -74,7 +73,7 @@ class ScienceDirect(PaperSite):
         return soup.find("meta", {"name": "citation_pdf_url"})['content'] or "NONE"
 
     def get_abstract(self,soup):
-        return soup.find("div", {"class": "abstract author"}).find("p").contents[0]
+        return soup.find("div", {"class": "abstract author"}).find("p").contents[0] #TODO allow multiple paragraphs
 
     def get_keywords(self, soup):
         return [x.contents[0] for x in soup.find("div", {"class": "keywords-section"}).findAll("span")] or "NONE"

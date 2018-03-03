@@ -31,3 +31,5 @@ http://onlinelibrary.wiley.com/doi/10.1002/bit.24558/abstract;jsessionid=D467FB6
 json = ps.extract_from_url("http://linkinghub.elsevier.com/retrieve/pii/S1549-9634(10)00005-5")
 
 pprint(json)
+
+driver.quit()
