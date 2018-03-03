@@ -12,12 +12,17 @@ class PaperSite(ABC):
 
 
     def extract(self, url):
-        """A method to handle the extraction of data """
-        if (self.website not in url):
-            raise ValueError("Not a %s article: %s" % (self.website, url))
+        """
+        A method to handle the extraction of data.
+        Returns a dictionary with keys corresponding to various components of a scientific paper.
+        """
+
+        if (not self.is_correct_url(url)):
+            raise ValueError("Not a %s article: %s" % (", ".join(self.website), url))
 
         driver = self.driver
         driver.get(url)
+        #TODO test for error in retrieving url
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
         return {
@@ -30,6 +35,11 @@ class PaperSite(ABC):
             'pdf_url':self.get_pdf_url(soup)
         }
 
+    def is_correct_url(self,url):
+        for site in self.website:
+            if site in url:
+                return True
+        return False
 
     @abstractmethod
     def get_authors(self, soup):
@@ -66,6 +76,8 @@ class PaperSite(ABC):
                     pn : contents
                 }
 
+        Paragraphs that do not belong to a section should be placed in a section named 'no_section'.
+        See the implementation in ScienceDirect.py for an example.
         """
         pass
 

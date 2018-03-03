@@ -1,7 +1,5 @@
 
 from websites.PaperSite import PaperSite
-import re
-from pprint import pprint
 """A scraper of a science direct articles"""
 
 
@@ -9,7 +7,8 @@ class ScienceDirect(PaperSite):
 
     def __init__(self,driver):
         self.driver = driver
-        self.website = "sciencedirect.com"
+        self.website = ["sciencedirect.com", "elsevier.com"]
+
 
     def get_authors(self, soup):
         authors_first = soup.find("div", {"class": "AuthorGroups"}).findAll("span", {"class": "given-name"})
@@ -29,16 +28,17 @@ class ScienceDirect(PaperSite):
         [tag.unwrap() for tag in head_section.findAll(["em","i","b","sub","sup"])]
 
         body = {}
-        self._get_body_helper(head_section, body)
+        self.__get_body_helper(head_section, body)
         return body
 
 
 
-    def _get_body_helper(self, section, dict):
+    def __get_body_helper(self, section, dict):
         """
         Every section has a title and either paragraphs or paragraphs and subsections.
         Recursively traverse these subsections and add to dict.
         """
+        [div.unwrap() for div in section.findAll("div", recursive = False)] #removes any div's that content may be wrapped in.
         section_title = section.find(["h1", "h2", "h3", "h4", "h5"]).getText()
         paragraphs = section.findAll("p", recursive=False)
         subsections = section.findAll("section", recursive=False)
@@ -52,8 +52,17 @@ class ScienceDirect(PaperSite):
                     paragraph_text = paragraph_text.replace("()", "") # a slight clean up from link removal
                     dict[section_title]['p' + str(i)] = paragraph_text
         else:
+            if(paragraphs): #has sections but also paragraphs
+                section_name = section_title or 'no_section'
+                dict[section_name] = {}
+                for i in range(len(paragraphs)):
+                    paragraph_text = paragraphs[i].getText()
+                    paragraph_text = paragraph_text.replace("()", "") # a slight clean up from link removal
+                    dict[section_name]['p' + str(i)] = paragraph_text
+
+
             for section in subsections:
-                self._get_body_helper(section, dict)
+                self.__get_body_helper(section, dict)
 
     def get_doi(self,soup):
         return soup.find("meta", {"name":"citation_doi"})['content'] or "NONE"
