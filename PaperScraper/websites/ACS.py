@@ -22,7 +22,7 @@ class ACS(PaperSite):
 
     def get_body(self, soup):
         pass
-        # Need Access
+        #TODO Need Access
 
     def get_doi(self, soup):
         doi_block = soup.find("div", id="doi")
@@ -31,7 +31,7 @@ class ACS(PaperSite):
 
     def get_keywords(self, soup):
         pass
-        # Need Access
+        #TODO  Need Access
 
     def get_pdf_url(self, soup):
         return "https://pubs.acs.org" + soup.find("ul", {"class": "publicationFormatList icons"}).findAll("li")[0].find("a")['href']

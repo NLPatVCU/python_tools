@@ -17,14 +17,16 @@ class PMC(PaperSite):
         return authors
 
     def get_abstract(self,soup):
-        print(soup)
+        #TODO get working
+        pass
         #abstract = soup.find("div", id=lambda x: x and x.startswith('__abstract'))
-        print(abstract)
-        print(soup.find("p", id="__p1"))
-        [tag.unwrap() for tag in abstract.findAll(["em", "i", "b", "sub", "sup"])]
-        return abstract.find("p").contents[0]
+        # print(abstract)
+        # print(soup.find("p", id="__p1"))
+        # [tag.unwrap() for tag in abstract.findAll(["em", "i", "b", "sub", "sup"])]
+        # return abstract.find("p").contents[0]
 
     def get_body(self, soup):
+        #TODO get working
         pass
 
     def get_doi(self, soup):
