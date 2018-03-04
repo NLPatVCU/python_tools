@@ -1,5 +1,5 @@
 import os
-from websites.ScienceDirect import ScienceDirect
+from PaperScraper.websites.ScienceDirect import ScienceDirect
 from selenium import webdriver
 from pprint import pprint
 

@@ -1,4 +1,4 @@
-from websites.ACS import ACS
+from PaperScraper.websites.ACS import ACS
 from selenium import webdriver
 from pprint import pprint
 
