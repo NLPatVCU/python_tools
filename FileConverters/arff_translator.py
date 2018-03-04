@@ -1,11 +1,9 @@
 import re, sys, fileinput, glob
 from os.path import join
 
-'''
-Quick script to modify arff files in the correct format for the converter.
+''' Quick script to modify arff files in the correct format for the converter.
+
 Pass the directory with the arff files as as argument add it will modify all arff files in that directory.
-
-
 '''
 
 path = path = join(sys.argv[1],"*")
