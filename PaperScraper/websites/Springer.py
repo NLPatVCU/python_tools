@@ -1,4 +1,5 @@
 from .PaperSite import PaperSite
+from collections import OrderedDict
 
 class Springer(PaperSite):
 
@@ -14,8 +15,11 @@ class Springer(PaperSite):
         return soup.find("section", {'class': 'Abstract'}).p.getText()
 
     def get_body(self, soup):
-        sections = soup.find("div", id="body").findAll('section', {'class':'Section1'})
-        return [{'title': section.h2.getText(), 'text': section.div.getText()} for section in sections]
+        sections = OrderedDict()
+        sections_markup = soup.find("div", id="body").findAll('section', {'class':'Section1'})
+        for section_markup in sections_markup:
+            sections[section_markup.h2.getText()] = section_markup.div.getText()
+        return sections
 
     def get_doi(self, soup):
         return soup.find('meta', {"name": "citation_doi"})['content']
