@@ -44,7 +44,7 @@ class PaperSite(ABC):
     @abstractmethod
     def get_authors(self, soup):
         """
-            Returns a dict of authors structured as
+            Returns an OrderedDict of authors structured as
                 a1 : {
                     first_name : fname,
                     last_name : lname
@@ -62,7 +62,7 @@ class PaperSite(ABC):
     @abstractmethod
     def get_body(self, soup):
         """
-            Returns a dict of sections structured as
+            Returns a OrderedDict of sections structured as
                 section1 : {
                     p1 : contents,
                     p2 : contents,

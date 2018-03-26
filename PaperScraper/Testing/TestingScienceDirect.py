@@ -1,7 +1,7 @@
 import os
-from PaperScraper.websites.ScienceDirect import ScienceDirect
+from websites.ScienceDirect import ScienceDirect
 from selenium import webdriver
-from pprint import pprint
+import json
 
 #https://www.sciencedirect.com/science/article/pii/S0144861713011806?via%3Dihub
 #https://www.sciencedirect.com/science/article/pii/S0041008X08003888?via%3Dihub
@@ -15,7 +15,7 @@ t = ScienceDirect(driver)
 
 dict = t.extract("http://linkinghub.elsevier.com/retrieve/pii/S1549-9634(10)00005-5")
 
-pprint(dict)
+print(json.dumps(dict, indent=4))
 # t.extract("https://www.sciencedirect.com/science/article/pii/S0041008X08003888?via%3Dihub")
 #
 # t.extract("facebook.com")
