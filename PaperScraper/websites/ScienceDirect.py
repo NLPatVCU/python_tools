@@ -22,6 +22,8 @@ class ScienceDirect(PaperSite):
 
     def get_body(self,soup):
         head_section = soup.find("div", {"class": "Body"}).find("div")
+        if head_section is None:
+            raise
 
         [tag.decompose() for tag in head_section.findAll(["a","span", "figure"])]
         [tag.unwrap() for tag in head_section.findAll(["em","i","b","sub","sup"])]
