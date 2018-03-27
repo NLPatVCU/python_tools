@@ -1,6 +1,7 @@
 from .PaperSite import PaperSite
 from collections import OrderedDict
 
+
 class Springer(PaperSite):
 
     def __init__(self, driver):
@@ -18,7 +19,8 @@ class Springer(PaperSite):
         sections = OrderedDict()
         sections_markup = soup.find("div", id="body").findAll('section', {'class':'Section1'})
         for section_markup in sections_markup:
-            sections[section_markup.h2.getText()] = section_markup.div.getText()
+            paragraphs = section_markup.div.findAll("p", {'class':'Para'})
+            sections[section_markup.h2.getText()] = [paragraph.getText() for paragraph in paragraphs]
         return sections
 
     def get_doi(self, soup):
