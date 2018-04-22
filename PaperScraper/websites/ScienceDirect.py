@@ -14,7 +14,7 @@ class ScienceDirect(PaperSite):
     def get_authors(self, soup):
         authors_first = soup.find("div", {"class": "AuthorGroups"}).findAll("span", {"class": "given-name"})
         authors_last = soup.find("div", {"class": "AuthorGroups"}).findAll("span", {"class": "surname"})
-        authors = {};
+        authors = {}
 
         for i in range(len(authors_first)):
             authors['a'+str(i+1)] = {'last_name':authors_last[i].contents[0], 'first_name':authors_first[i].contents[0]}
@@ -81,4 +81,3 @@ class ScienceDirect(PaperSite):
 
     def get_keywords(self, soup):
         return [x.contents[0] for x in soup.find("div", {"class": "keywords-section"}).findAll("span")] or "NONE"
-

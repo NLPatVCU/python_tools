@@ -10,7 +10,8 @@ import json
 
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
-driver = webdriver.Chrome("/home/andriy/Documents/gitprojects/NLP-Lab/Tools/PaperScraper/drivers/chromedriver",chrome_options=options)
+driver = webdriver.Chrome(chrome_options=options)
+#driver = webdriver.Chrome("/home/andriy/Documents/gitprojects/NLP-Lab/Tools/PaperScraper/drivers/chromedriver",chrome_options=options)
 t = ScienceDirect(driver)
 
 dict = t.extract("http://linkinghub.elsevier.com/retrieve/pii/S1549-9634(10)00005-5")

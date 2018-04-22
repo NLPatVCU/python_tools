@@ -1,4 +1,4 @@
-from PaperScraper.websites.Springer import Springer
+from websites.Springer import Springer
 from selenium import webdriver
 import json
 
