@@ -26,10 +26,10 @@ class PMC(PaperSite):
         # [tag.unwrap() for tag in abstract.findAll(["em", "i", "b", "sub", "sup"])]
         # return abstract.find("p").contents[0]
 
+    # In the terminal some characters aren't printed correctly, but they show up correctly when printed to
+    # a text file.
     def get_body(self, soup):
-        # TODO Add in the subsections in each big section
-        # TODO Fix weird characters arising from the character encoding
-
+        
         # Called on each section to get rid of table and figure content as well as remove links
         def clean_section(section):
             [tag.decompose() for tag in section.findAll(["a", "span", "figure"])]
@@ -38,9 +38,11 @@ class PMC(PaperSite):
 
         # Called on each paragraph to clean up the aftermath of link removal
         def clean_paragraph(paragraph):
-            paragraph = re.sub(r" (\(\))", "", paragraph)
+            paragraph = paragraph.replace("()", "")
             paragraph = paragraph.replace(", )", ")")
             paragraph = paragraph.replace(" - ", "")
+            paragraph = paragraph.replace(".,", ".")
+            paragraph = paragraph.replace(",,", ",")
             return paragraph
 
         sections = OrderedDict()
