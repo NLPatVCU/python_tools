@@ -53,6 +53,10 @@ class BratParse:
         >>> all_annotations = [(text, annotations) for text, annotations in bp]
         # Parse into a dictionary indexed by document basename
         >>> all_annotations = {bp.doc_ids[i]: {'text': text, 'annotations': annotations} for i, (text, annotations) in enumerate(bp)}
+        
+    See Also: 
+        standoff documentation - https://brat.nlplab.org/standoff.html
+        example data - https://github.com/nlplab/brat/tree/master/example-data/corpora
     """
 
     def __init__(self,
