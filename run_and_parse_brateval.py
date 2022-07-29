@@ -32,15 +32,12 @@ def entity_extraction(ner_gold_folder=None,
     ner = 'au.com.nicta.csp.brateval.CompareEntities'
 
     # print('EXACT match')
-    brat_exact = subprocess.run(['java', '-cp', brat_eval_path, ner, ner_pred_folder, ner_gold_folder, '-s', 'exact'],
+    brat_exact = subprocess.run(['java', '-cp', brat_eval_path, ner, ner_pred_folder, ner_gold_folder, '1'],
                                 capture_output=True)
+    assert not brat_exact.stderr, f"brat returned error: {brat_exact.stderr}"
     exact = dataframe_from_brateval_ner(brat_exact, header=True)
 
-    # print('RELAX match')
-    brat_relax = subprocess.run(['java', '-cp', brat_eval_path, ner, ner_pred_folder, ner_gold_folder, '-s', 'overlap'],
-                                capture_output=True)
-    relax = dataframe_from_brateval_ner(brat_relax, header=True)
-    return {'exact': exact, 'relax': relax}
+    return {'exact': exact}
 
 
 def dataframe_from_brateval_ner(brateval_results, header=False):
@@ -67,6 +64,7 @@ def event_extraction(ee_gold_folder=None,
     # print('EXACT match')
     brat_exact = subprocess.run(['java', '-cp', brat_eval_path, rel, ee_pred_folder, ee_gold_folder, '-s', 'exact_df'],
                                 capture_output=True)
+
     brat_exact = brat_exact.stdout.decode().strip().splitlines()
     brat_exact = brat_exact[brat_exact.index('Summary:') + 1:]
     exact_df = brat_to_dataframe_ee(brat_exact)
